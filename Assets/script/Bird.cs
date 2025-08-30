@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
-public class bird : MonoBehaviour
+public class Bird : MonoBehaviour
 {
 
 
@@ -21,9 +21,10 @@ public class bird : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject player = GameObject.Find("ScareCrow");
-        Rigidbody2D rbPlayer = player.GetComponent<Rigidbody2D>();
 
-        playerMovement.jumMax = 2;
+        playerMovement.setJumMax(2);
+        playerMovement.setIsGrounded(true);
+
     }
+    
 }

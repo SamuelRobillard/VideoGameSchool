@@ -14,11 +14,12 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private float xAxis;
     [SerializeField] private float walkspeed = 6f;
-    
-    [SerializeField] private float jumpForce = 2f;
+
+    [SerializeField] private float jumpForce = 10f;
     private bool isgrounded;
     private bool isPiked;
-    public int jumMax = 2;
+    [SerializeField] private int jumMax = 1;
+
     private int currentJump = 0;
 
     // Start is called before the first frame update
@@ -38,33 +39,45 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Jump") && (isgrounded || currentJump < jumMax))
+        if ((Input.GetButtonDown("Jump") && isgrounded) || (Input.GetButtonDown("Jump") && currentJump < jumMax))
         {
 
-            rb.velocity = new Vector2(rb.velocity.x, 10f);
-            currentJump += 1;
-            Debug.Log(currentJump);
+            if (currentJump < 2)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 10f);
+                Debug.Log(currentJump + " " + isgrounded);
+                currentJump += 1; 
+            }
+            
+
         }
     }
 
     void GetInputs()
     {
         xAxis = Input.GetAxisRaw("Horizontal");
-        
-        
+
+
     }
     private void Move()
     {
-        
+
         rb.velocity = new Vector2(walkspeed * xAxis, rb.velocity.y);
 
     }
 
-
+    public void setJumMax(int value)
+    {
+        jumMax = value;
+    }
+    public void setIsGrounded(bool value)
+    {
+        isgrounded = value;
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("floor"))
+        if (collision.gameObject.tag.Equals("floor") || collision.gameObject.tag.Equals("bird") )
         {
             
             isgrounded = true;
@@ -132,9 +145,9 @@ public class PlayerMovement : MonoBehaviour
     
     void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.gameObject.tag.Equals("floor")){
-            
+        if(collision.gameObject.tag.Equals("floor") || collision.gameObject.tag.Equals("bird") ){
             isgrounded = false;
+            
         }
        
     }
