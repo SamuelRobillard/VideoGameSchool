@@ -23,10 +23,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isgrounded;
     private bool isPiked;
     [SerializeField] private int jumMax = 1;
+    public bool isInside = false;
 
     private int currentJump = 0;
     private AudioSource audioSource;
-    
+    private Animator animator;
     
 
     // Start is called before the first frame update
@@ -36,19 +37,34 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 2f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-        
+        animator = GetComponent<Animator>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (isInside)
+        {
+            quitInsideHouse(5f, 12f, 4f, -1.8f);
+        }
+
+        hasFallTooLow();
         if (!isPiked)
         {
             GetInputs();
             Move();
         }
-
+        if (Input.GetKey(KeyCode.X))
+        {
+            animator.SetBool("Attack", true); // lance l’animation
+           
+        }
+        else
+        {
+            animator.SetBool("Attack", false); // arrête l’animation
+        }
 
         if ((Input.GetButtonDown("Jump") && isgrounded) || (Input.GetButtonDown("Jump") && currentJump < jumMax))
         {
@@ -65,19 +81,56 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void hasFallTooLow()
+    {
+        if (rb.position.y < -10)
+        {
+            transform.position = new Vector2(4f, -1.8f);
+            loseALife();
+        }
+    }
+    public void quitInsideHouse(float xOrigine, float yOrigine, float xDest, float yDest)
+    {
+        if (rb.position.x < xOrigine && rb.position.y > yOrigine)
+        {
+            transform.position = new Vector2(xDest, yDest);
+        }
+
+    }
+    public float getXPosition()
+    {
+        Debug.Log("this is pos " + rb.position.x);
+        return rb.position.x;
+    }
+    public float getYposition()
+    {
+        return rb.position.y;
+    }
+    public void setXYposition(float x, float y)
+    {
+        transform.position = new Vector2(x, y);
+    }
+
     void GetInputs()
     {
         xAxis = Input.GetAxisRaw("Horizontal");
-        if (xAxis > 0)
-        {
-            spriteRenderer.flipX = true;
+        if(xAxis != 0){
+            animator.SetFloat("X", 1);
         }
-        else if (xAxis < 0)
+        else{
+            animator.SetFloat("X", 0);
+        }
+        
+        if (xAxis > 0)
         {
             spriteRenderer.flipX = false;
         }
+        else if (xAxis < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
        
-
+       
     }
     private void Move()
     {
@@ -106,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("floor") || collision.gameObject.tag.Equals("bird") )
+        if (collision.gameObject.tag.Equals("floor"))
         {
             
             isgrounded = true;
@@ -115,8 +168,19 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.gameObject.tag.Equals("spike"))
             
+            
         {
-            int i = 1;
+            animator.SetBool("isHit", true);
+            loseALife();
+            isPiked = true;
+            rb.velocity = new Vector2(walkspeed * -1, rb.velocity.y + 6);
+            
+        }
+    }
+
+    private void loseALife()
+    {
+        int i = 1;
             bool endingGame = false;
             // toujours mettre une deuxieme condition /:
             // -> evite de faire crash a cause de la boucle
@@ -166,15 +230,13 @@ public class PlayerMovement : MonoBehaviour
                 string currentSceneName = SceneManager.GetActiveScene().name;
                 SceneManager.LoadScene(currentSceneName);
             }
-            isPiked = true;
-            rb.velocity = new Vector2(walkspeed * -1, rb.velocity.y + 6);
-            
-        }
     }
     
     void OnCollisionExit2D(Collision2D collision)
+
     {
-        if(collision.gameObject.tag.Equals("floor") || collision.gameObject.tag.Equals("bird") ){
+        animator.SetBool("isHit", false);
+        if(collision.gameObject.tag.Equals("floor")){
             isgrounded = false;
             
         }
