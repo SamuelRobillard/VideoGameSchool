@@ -18,7 +18,7 @@ public class TextInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(playerMovement.getXPosition());
+        
         if (playerMovement.getXPosition() > 3 && playerMovement.getXPosition() < 5 && playerMovement.getYposition() <5)
         {
             text.SetActive(true);

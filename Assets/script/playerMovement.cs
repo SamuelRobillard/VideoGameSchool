@@ -11,13 +11,16 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+
     [SerializeField] AudioClip sfxJump;
     [SerializeField] AudioClip sfxWalk;
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private float xAxis;
     private float yaxis;
     [SerializeField] private float walkspeed = 6f;
+    [SerializeField] private int LowestGround;
 
     [SerializeField] private float jumpForce = 10f;
     private bool isgrounded;
@@ -28,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private int currentJump = 0;
     private AudioSource audioSource;
     private Animator animator;
-    
 
+    public int vieRestante = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
             quitInsideHouse(5f, 12f, 4f, -1.8f);
         }
 
-        hasFallTooLow();
+        hasFallTooLow(LowestGround);
         if (!isPiked)
         {
             GetInputs();
@@ -59,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.X))
         {
             animator.SetBool("Attack", true); // lance l’animation
-           
+
         }
         else
         {
@@ -73,20 +76,20 @@ public class PlayerMovement : MonoBehaviour
             {
                 audioSource.PlayOneShot(sfxJump);
                 rb.velocity = new Vector2(rb.velocity.x, 10f);
-                Debug.Log(currentJump + " " + isgrounded);
-                currentJump += 1; 
+
+                currentJump += 1;
             }
-            
+
 
         }
     }
 
-    private void hasFallTooLow()
+    private void hasFallTooLow(int minimumY)
     {
-        if (rb.position.y < -10)
+        if (rb.position.y < minimumY)
         {
             transform.position = new Vector2(4f, -1.8f);
-            loseALife();
+            loseALifeVersionRenderer();
         }
     }
     public void quitInsideHouse(float xOrigine, float yOrigine, float xDest, float yDest)
@@ -99,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public float getXPosition()
     {
-        Debug.Log("this is pos " + rb.position.x);
+        
         return rb.position.x;
     }
     public float getYposition()
@@ -114,13 +117,15 @@ public class PlayerMovement : MonoBehaviour
     void GetInputs()
     {
         xAxis = Input.GetAxisRaw("Horizontal");
-        if(xAxis != 0){
+        if (xAxis != 0)
+        {
             animator.SetFloat("X", 1);
         }
-        else{
+        else
+        {
             animator.SetFloat("X", 0);
         }
-        
+
         if (xAxis > 0)
         {
             spriteRenderer.flipX = false;
@@ -129,8 +134,8 @@ public class PlayerMovement : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-       
-       
+
+
     }
     private void Move()
     {
@@ -141,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
             audioSource.PlayOneShot(sfxWalk);
         }
         yaxis = Input.GetAxisRaw("Vertical");
-        Debug.Log(yaxis);
+        
         if (xAxis == 0 && yaxis! > 0)
         {
             audioSource.Stop();
@@ -161,85 +166,122 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("floor"))
         {
-            
+
             isgrounded = true;
             currentJump = 0;
             isPiked = false;
         }
         if (collision.gameObject.tag.Equals("spike"))
-            
-            
+
+
         {
             animator.SetBool("isHit", true);
-            loseALife();
+            loseALifeVersionRenderer();
             isPiked = true;
             rb.velocity = new Vector2(walkspeed * -1, rb.velocity.y + 6);
-            
+
         }
     }
 
-    private void loseALife()
+    public void winALife()
     {
-        int i = 1;
-            bool endingGame = false;
-            // toujours mettre une deuxieme condition /:
-            // -> evite de faire crash a cause de la boucle
-            // et de perdre 1h de travail car pas save
-            while (true && i < 5 && endingGame == false)
-            {
-
-
-                GameObject lifes = GameObject.Find("lifes" + " " + "(" + i + ")");
-                
-                if (lifes == null)
-                {
-                    if (i >= 3)
-                    {
-
-                        endingGame = true;
-                        break;
-                    }
-                    else
-                    {
-                        i += 1;
-                    }
-
-
-                }
-                else
-                {
-                    if (i == 3)
-                    {
-                        endingGame = true;
-                    }
-                    Destroy(lifes);
-                    
-                    break;
-                }
-
-
-
-            }
-
-
-
-
-            if (endingGame)
-            {
-            
-                string currentSceneName = SceneManager.GetActiveScene().name;
-                SceneManager.LoadScene(currentSceneName);
-            }
+        if (vieRestante < 3)
+        {
+            vieRestante += 1;
+            GameObject lifes = GameObject.Find("lifes" + " " + "(" + vieRestante + ")");
+            lifes.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        
+        
     }
-    
+    // public void loseALife()
+    // {
+    //     int i = 1;
+    //     animator.SetBool("isHit", true);
+    //     bool endingGame = false;
+    //     // toujours mettre une deuxieme condition /:
+    //     // -> evite de faire crash a cause de la boucle
+    //     // et de perdre 1h de travail car pas save
+    //     while (true && i < 5 && endingGame == false)
+    //     {
+
+
+    //         GameObject lifes = GameObject.Find("lifes" + " " + "(" + i + ")");
+
+    //         if (lifes == null)
+    //         {
+    //             if (i >= 3)
+    //             {
+
+    //                 endingGame = true;
+
+    //                 break;
+    //             }
+    //             else
+    //             {
+    //                 i += 1;
+    //             }
+
+
+    //         }
+    //         else
+    //         {
+    //             Destroy(lifes);
+
+    //             if (i == 3)
+    //             {
+
+    //                 endingGame = true;
+    //             }
+
+
+    //             break;
+    //         }
+
+
+
+    //     }
+
+
+
+
+    //     if (endingGame)
+    //     {
+
+    //         string currentSceneName = SceneManager.GetActiveScene().name;
+    //         SceneManager.LoadScene(currentSceneName);
+    //     }
+    // }
+    public void loseALifeVersionRenderer()
+    {
+        animator.SetBool("isHit", true);
+        GameObject lifes = GameObject.Find("lifes" + " " + "(" + vieRestante + ")");
+        lifes.GetComponent<SpriteRenderer>().enabled = false;
+        vieRestante -= 1;
+        if (vieRestante == 0)
+        {
+            endingGame();
+        }
+    }
     void OnCollisionExit2D(Collision2D collision)
 
     {
         animator.SetBool("isHit", false);
-        if(collision.gameObject.tag.Equals("floor")){
+        if (collision.gameObject.tag.Equals("floor"))
+        {
             isgrounded = false;
-            
+
         }
-       
+
+    }
+    private void endingGame()
+    {
+
+        winALife();
+        winALife();
+        winALife();
+                string currentSceneName = SceneManager.GetActiveScene().name;
+                SceneManager.LoadScene(currentSceneName);
+            
     }
 }
