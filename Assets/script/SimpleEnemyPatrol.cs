@@ -22,7 +22,7 @@ void FixedUpdate()
 {
 float dir = toRight ? 1f : -1f;
 rb.velocity = new Vector2(dir * speed, rb.velocity.y);
-sr.flipX = !toRight;
+sr.flipX = toRight;
 //  animator?.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
  
 if (toRight && transform.position.x >= rightPoint.position.x) toRight = false;

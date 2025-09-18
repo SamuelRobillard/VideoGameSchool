@@ -19,7 +19,7 @@ public class PlayerHitEnemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         isFacing();
         if (Input.GetKey(KeyCode.X))
@@ -28,6 +28,10 @@ public class PlayerHitEnemy : MonoBehaviour
             isTouching();
            
         }
+    }
+    void Update()
+    {
+        
        
         
     }
