@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("Attack", false); // arrête l’animation
         }
+        //logique pour la gestion du saut
 
         if ((Input.GetButtonDown("Jump") && isgrounded) || (Input.GetButtonDown("Jump") && currentJump < jumMax))
         {
@@ -92,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
             loseALifeVersionRenderer();
         }
     }
+    //teleporte le joueur a une position donne
     public void quitInsideHouse(float xOrigine, float yOrigine, float xDest, float yDest)
     {
         if (rb.position.x < xOrigine && rb.position.y > yOrigine)
@@ -116,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GetInputs()
     {
+        //voie de quel cote le player bouge et tourne le spirte
         xAxis = Input.GetAxisRaw("Horizontal");
         if (xAxis != 0)
         {
@@ -163,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision)
+    // si le joueur touche le seul il peut re sauter
     {
         if (collision.gameObject.tag.Equals("floor"))
         {
@@ -171,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
             currentJump = 0;
             isPiked = false;
         }
+        // animation de degat et perte de pv
         if (collision.gameObject.tag.Equals("spike"))
 
 
@@ -183,6 +188,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //permet de regagner une vie
     public void winALife()
     {
         if (vieRestante < 3)
@@ -191,8 +197,8 @@ public class PlayerMovement : MonoBehaviour
             GameObject lifes = GameObject.Find("lifes" + " " + "(" + vieRestante + ")");
             lifes.GetComponent<SpriteRenderer>().enabled = true;
         }
-        
-        
+
+
     }
     // public void loseALife()
     // {
@@ -252,6 +258,11 @@ public class PlayerMovement : MonoBehaviour
     //         SceneManager.LoadScene(currentSceneName);
     //     }
     // }
+
+
+
+    //rend le sprite des vies inactifs
+    // et regarde si le joueur na plus de vie
     public void loseALifeVersionRenderer()
     {
         animator.SetBool("isHit", true);
@@ -263,6 +274,7 @@ public class PlayerMovement : MonoBehaviour
             endingGame();
         }
     }
+    // desactive l'option de saut
     void OnCollisionExit2D(Collision2D collision)
 
     {
@@ -274,14 +286,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    
+    // redone les vies au joeueur et restart la scene
     private void endingGame()
     {
 
         winALife();
         winALife();
         winALife();
-                string currentSceneName = SceneManager.GetActiveScene().name;
-                SceneManager.LoadScene(currentSceneName);
-            
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+
     }
 }

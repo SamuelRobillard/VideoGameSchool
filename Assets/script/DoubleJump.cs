@@ -21,6 +21,8 @@ public class DoubleJump : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
+        // permet au joueur de sauter 2 foix
+        // et detruit l'objet que le joueuer a ramasser
 
         playerMovement.setJumMax(2);
         playerMovement.setIsGrounded(true);

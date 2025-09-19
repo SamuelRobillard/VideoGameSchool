@@ -37,8 +37,11 @@ public class PlayerHitEnemy : MonoBehaviour
     }
     private void isTouching()
     {
-        if (playerIsAttackingTowardTheLeft)
+
+        //logique pour savoir si lors de l'attaque le joueur touche l'ennemie
         
+        if (playerIsAttackingTowardTheLeft)
+
         {
 
             if (playerMovement.getXPosition() - rb.position.x < 2 && !(playerMovement.getXPosition() - rb.position.x < 0))
@@ -49,7 +52,7 @@ public class PlayerHitEnemy : MonoBehaviour
         }
         else
         {
-            Debug.Log(playerMovement.getXPosition() -  rb.position.x);
+            Debug.Log(playerMovement.getXPosition() - rb.position.x);
             if (playerMovement.getXPosition() - rb.position.x < 0 && !(playerMovement.getXPosition() - rb.position.x < -2))
             {
                 numberOfBeinghit += 1;
@@ -59,13 +62,14 @@ public class PlayerHitEnemy : MonoBehaviour
 
         if (numberOfBeinghit == Pvnumber)
         {
-
+            // si l'ennemi est touchner plusieurs fois il meurt
             Debug.Log("adadsasdads");
             playerMovement.winALife();
             
             Destroy(gameObject);
         }
     }
+    // regarde de quel cote le joueur regarde
     private void isFacing()
     {
         if (playerMovement.spriteRenderer.flipX == true)
