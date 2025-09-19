@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] AudioClip sfxJump;
     [SerializeField] AudioClip sfxWalk;
+    [SerializeField] public AudioClip sfxAttack;
     public SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private float xAxis;
@@ -29,9 +31,12 @@ public class PlayerMovement : MonoBehaviour
     public bool isInside = false;
 
     private int currentJump = 0;
-    private AudioSource audioSource;
-    private Animator animator;
+    public AudioSource audioSource;
+    public Animator animator;
+    
+    
 
+    
     public int vieRestante = 3;
     // Start is called before the first frame update
     void Start()
@@ -59,15 +64,10 @@ public class PlayerMovement : MonoBehaviour
             GetInputs();
             Move();
         }
-        if (Input.GetKey(KeyCode.X))
-        {
-            animator.SetBool("Attack", true); // lance l’animation
+        
 
-        }
-        else
-        {
-            animator.SetBool("Attack", false); // arrête l’animation
-        }
+
+
         //logique pour la gestion du saut
 
         if ((Input.GetButtonDown("Jump") && isgrounded) || (Input.GetButtonDown("Jump") && currentJump < jumMax))
@@ -85,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+   
     private void hasFallTooLow(int minimumY)
     {
         if (rb.position.y < minimumY)
@@ -263,7 +265,7 @@ public class PlayerMovement : MonoBehaviour
 
     //rend le sprite des vies inactifs
     // et regarde si le joueur na plus de vie
-    public void loseALifeVersionRenderer()
+    public async void loseALifeVersionRenderer()
     {
         animator.SetBool("isHit", true);
         GameObject lifes = GameObject.Find("lifes" + " " + "(" + vieRestante + ")");
@@ -271,6 +273,9 @@ public class PlayerMovement : MonoBehaviour
         vieRestante -= 1;
         if (vieRestante == 0)
         {
+            
+            await Task.Delay(2000);
+        
             endingGame();
         }
     }

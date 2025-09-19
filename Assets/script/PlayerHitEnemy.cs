@@ -8,10 +8,13 @@ public class PlayerHitEnemy : MonoBehaviour
 {
 
     [SerializeField]PlayerMovement playerMovement;
+    [SerializeField] isAttacking isAttacking;
     [SerializeField]Rigidbody2D rb;
     [SerializeField] int Pvnumber;
     private int numberOfBeinghit = 0;
     private bool playerIsAttackingTowardTheLeft;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -22,50 +25,62 @@ public class PlayerHitEnemy : MonoBehaviour
     void FixedUpdate()
     {
         isFacing();
-        if (Input.GetKey(KeyCode.X))
-        {
+
+       
             
-            isTouching();
+               
+            
+         
            
-        }
+        
     }
     void Update()
     {
-        
-       
+        if (isAttacking.isAttackingFunct())
+        {
+          Debug.Log("aada");
+        isTouching();  
+        }
+            
         
     }
+    
+    
     private void isTouching()
     {
 
         //logique pour savoir si lors de l'attaque le joueur touche l'ennemie
-        
+
         if (playerIsAttackingTowardTheLeft)
 
         {
 
-            if (playerMovement.getXPosition() - rb.position.x < 2 && !(playerMovement.getXPosition() - rb.position.x < 0))
+            if (playerMovement.getXPosition() - rb.position.x < 3 && !(playerMovement.getXPosition() - rb.position.x < 0))
             {
+
                 numberOfBeinghit += 1;
                 Debug.Log(numberOfBeinghit);
+                
             }
         }
         else
         {
-            Debug.Log(playerMovement.getXPosition() - rb.position.x);
-            if (playerMovement.getXPosition() - rb.position.x < 0 && !(playerMovement.getXPosition() - rb.position.x < -2))
+
+            if (playerMovement.getXPosition() - rb.position.x < 0 && !(playerMovement.getXPosition() - rb.position.x < -3))
             {
                 numberOfBeinghit += 1;
                 Debug.Log(numberOfBeinghit);
+                
+
             }
         }
 
         if (numberOfBeinghit == Pvnumber)
         {
             // si l'ennemi est touchner plusieurs fois il meurt
-            Debug.Log("adadsasdads");
+
             playerMovement.winALife();
-            
+            playerMovement.animator.SetBool("Attack", false);
             Destroy(gameObject);
         }
     }
