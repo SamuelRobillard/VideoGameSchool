@@ -66,19 +66,19 @@ public class PlayerMovement : MonoBehaviour
             GetInputs();
             Move();
         }
-        
+
 
 
 
         //logique pour la gestion du saut
-
+        
         if ((Input.GetButtonDown("Jump") && isgrounded) || (Input.GetButtonDown("Jump") && currentJump < jumMax))
         {
-
-            if (currentJump < 2 && rb.velocity.y == 0)
-            {
+            
+            if (currentJump < 2)
+            {   
                 audioSource.PlayOneShot(sfxJump);
-                rb.velocity = new Vector2(rb.velocity.x, 10f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
 
                 currentJump += 1;
             }
@@ -148,16 +148,16 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
 
-        rb.velocity = new Vector2(walkspeed * xAxis, rb.velocity.y);
+        rb.linearVelocity = new Vector2(walkspeed * xAxis, rb.linearVelocity.y);
         if (xAxis != 0 && isgrounded && !audioSource.isPlaying)
         {
             audioSource.PlayOneShot(sfxWalk);
         }
         yaxis = Input.GetAxisRaw("Vertical");
         
-        if (xAxis == 0 && !(rb.velocity.y > 0))
+        if (xAxis == 0 && !(rb.linearVelocity.y > 0))
         {
-            Debug.Log(rb.velocity.y);
+            
             audioSource.Stop();
         }
     }
@@ -186,10 +186,10 @@ public class PlayerMovement : MonoBehaviour
 
 
         {
-            animator.SetBool("isHit", true);
+            
             handlePlayerLife.loseALifeVersionRenderer();
             isPiked = true;
-            rb.velocity = new Vector2(walkspeed * -1, rb.velocity.y + 6);
+            rb.linearVelocity = new Vector2(walkspeed * -1, rb.linearVelocity.y + 6);
 
         }
     }

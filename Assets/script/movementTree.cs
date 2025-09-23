@@ -18,6 +18,6 @@ public class movementTree : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal"); // 
 
         // Set the horizontal velocity
-        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
     }
 }

@@ -21,7 +21,7 @@ sr = GetComponent<SpriteRenderer>();
 void FixedUpdate()
 {
 float dir = toRight ? 1f : -1f;
-rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+rb.linearVelocity = new Vector2(dir * speed, rb.linearVelocity.y);
 sr.flipX = toRight;
 //  animator?.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
  

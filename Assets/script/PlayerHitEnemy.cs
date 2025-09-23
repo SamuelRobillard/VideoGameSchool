@@ -61,7 +61,7 @@ public class PlayerHitEnemy : MonoBehaviour
     private void EnemyHit()
     {
         numberOfBeinghit += 1;
-        Debug.Log($"Enemy hit {numberOfBeinghit} / {Pvnumber}");
+        
 
         if (numberOfBeinghit >= Pvnumber)
         {
