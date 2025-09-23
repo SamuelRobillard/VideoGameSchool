@@ -6,9 +6,10 @@ public class Potion : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] PlayerMovement playerMovement;
+    private HandlePlayerLife handlePlayerLife;
     void Start()
     {
-
+        handlePlayerLife = playerMovement.GetComponent<HandlePlayerLife>();
     }
 
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class Potion : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            playerMovement.winALife();
+            handlePlayerLife.winALife();
             Object.Destroy(GameObject.Find("potion"));
         }
     }

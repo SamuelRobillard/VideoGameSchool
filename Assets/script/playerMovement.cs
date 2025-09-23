@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float walkspeed = 6f;
     [SerializeField] private int LowestGround;
 
-    [SerializeField] private float jumpForce = 10f;
+    
     private bool isgrounded;
     private bool isPiked;
     [SerializeField] private int jumMax = 1;
@@ -33,11 +33,12 @@ public class PlayerMovement : MonoBehaviour
     private int currentJump = 0;
     public AudioSource audioSource;
     public Animator animator;
-    
-    
 
-    
-    public int vieRestante = 3;
+    private HandlePlayerLife handlePlayerLife;
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        handlePlayerLife = GetComponent<HandlePlayerLife>();
 
     }
 
@@ -73,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetButtonDown("Jump") && isgrounded) || (Input.GetButtonDown("Jump") && currentJump < jumMax))
         {
 
-            if (currentJump < 2)
+            if (currentJump < 2 && rb.velocity.y == 0)
             {
                 audioSource.PlayOneShot(sfxJump);
                 rb.velocity = new Vector2(rb.velocity.x, 10f);
@@ -92,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
         if (rb.position.y < minimumY)
         {
             transform.position = new Vector2(4f, -1.8f);
-            loseALifeVersionRenderer();
+
+            handlePlayerLife.loseALifeVersionRenderer();
         }
     }
     //teleporte le joueur a une position donne
@@ -152,8 +155,9 @@ public class PlayerMovement : MonoBehaviour
         }
         yaxis = Input.GetAxisRaw("Vertical");
         
-        if (xAxis == 0 && yaxis! > 0)
+        if (xAxis == 0 && !(rb.velocity.y > 0))
         {
+            Debug.Log(rb.velocity.y);
             audioSource.Stop();
         }
     }
@@ -177,108 +181,21 @@ public class PlayerMovement : MonoBehaviour
             currentJump = 0;
             isPiked = false;
         }
-        // animation de degat et perte de pv
+        
         if (collision.gameObject.tag.Equals("spike"))
 
 
         {
             animator.SetBool("isHit", true);
-            loseALifeVersionRenderer();
+            handlePlayerLife.loseALifeVersionRenderer();
             isPiked = true;
             rb.velocity = new Vector2(walkspeed * -1, rb.velocity.y + 6);
 
         }
     }
 
-    //permet de regagner une vie
-    public void winALife()
-    {
-        if (vieRestante < 3)
-        {
-            vieRestante += 1;
-            GameObject lifes = GameObject.Find("lifes" + " " + "(" + vieRestante + ")");
-            lifes.GetComponent<SpriteRenderer>().enabled = true;
-        }
 
-
-    }
-    // public void loseALife()
-    // {
-    //     int i = 1;
-    //     animator.SetBool("isHit", true);
-    //     bool endingGame = false;
-    //     // toujours mettre une deuxieme condition /:
-    //     // -> evite de faire crash a cause de la boucle
-    //     // et de perdre 1h de travail car pas save
-    //     while (true && i < 5 && endingGame == false)
-    //     {
-
-
-    //         GameObject lifes = GameObject.Find("lifes" + " " + "(" + i + ")");
-
-    //         if (lifes == null)
-    //         {
-    //             if (i >= 3)
-    //             {
-
-    //                 endingGame = true;
-
-    //                 break;
-    //             }
-    //             else
-    //             {
-    //                 i += 1;
-    //             }
-
-
-    //         }
-    //         else
-    //         {
-    //             Destroy(lifes);
-
-    //             if (i == 3)
-    //             {
-
-    //                 endingGame = true;
-    //             }
-
-
-    //             break;
-    //         }
-
-
-
-    //     }
-
-
-
-
-    //     if (endingGame)
-    //     {
-
-    //         string currentSceneName = SceneManager.GetActiveScene().name;
-    //         SceneManager.LoadScene(currentSceneName);
-    //     }
-    // }
-
-
-
-    //rend le sprite des vies inactifs
-    // et regarde si le joueur na plus de vie
-    public async void loseALifeVersionRenderer()
-    {
-        animator.SetBool("isHit", true);
-        GameObject lifes = GameObject.Find("lifes" + " " + "(" + vieRestante + ")");
-        lifes.GetComponent<SpriteRenderer>().enabled = false;
-        vieRestante -= 1;
-        if (vieRestante == 0)
-        {
-            
-            await Task.Delay(2000);
-        
-            endingGame();
-        }
-    }
+    
     // desactive l'option de saut
     void OnCollisionExit2D(Collision2D collision)
 
@@ -293,14 +210,5 @@ public class PlayerMovement : MonoBehaviour
     }
     
     // redone les vies au joeueur et restart la scene
-    private void endingGame()
-    {
-
-        winALife();
-        winALife();
-        winALife();
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-
-    }
+    
 }

@@ -1,72 +1,41 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class isAttacking : MonoBehaviour
+public class IsAttacking : MonoBehaviour
 {
-
-    [SerializeField]PlayerMovement playerMovement;
-    private int numberOfBeinghit = 0;
-    private bool playerIsAttackingTowardTheLeft;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] AudioSource audioSource;
     public float cooldown = 0.5f;
-    public float lastAttackedAt = -9999f;
+    private float lastAttackedAt = -9999f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool isAttacking = false;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-       
-
-       
-            
-               
-            
-         
-           
-        
-    }
     void Update()
     {
-        
-        isAttackingFunct();
-        
+        HandleAttack();
     }
 
-    public bool isAttackingFunct()
+    public void HandleAttack()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) && Time.time > lastAttackedAt + cooldown)
         {
-
-            Debug.Log(Time.time + " : " + lastAttackedAt);
-
-            if (Time.time > lastAttackedAt + cooldown)
-            {
-                //do the attack
-                lastAttackedAt = Time.time;
-
-                playerMovement.animator.SetBool("Attack", true); // lance l’animation
-                playerMovement.audioSource.PlayOneShot(playerMovement.sfxAttack);
-                return true;
-            }
-
-
-
+            lastAttackedAt = Time.time;
+            isAttacking = true;
+            
+            playerMovement.animator.SetBool("Attack", true);
+            audioSource.PlayOneShot(playerMovement.sfxAttack);
         }
-        else
+
+        if (isAttacking && Time.time > lastAttackedAt + cooldown)
         {
-            playerMovement.animator.SetBool("Attack", false); // arrête l’animation
-            return false;
+            isAttacking = false;
+            
         }
-        return false;
+        
     }
-   
-    // regarde de quel cote le joueur regarde
-   
+
+    // 👉 fonction pour d’autres scripts
+    public bool IsAttackingNow()
+    {
+        return isAttacking;
+    }
 }

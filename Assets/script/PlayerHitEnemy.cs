@@ -1,101 +1,77 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHitEnemy : MonoBehaviour
 {
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private int Pvnumber;
+    private HandlePlayerLife handlePlayerLife;
 
-    [SerializeField]PlayerMovement playerMovement;
-    [SerializeField] isAttacking isAttacking;
-    [SerializeField]Rigidbody2D rb;
-    [SerializeField] int Pvnumber;
     private int numberOfBeinghit = 0;
     private bool playerIsAttackingTowardTheLeft;
 
-    
-    // Start is called before the first frame update
+    private IsAttacking isAttacking;
+    private bool hasHitThisAttack = false; // ✅ nouveau flag
+
     void Start()
     {
-        
+        isAttacking = playerMovement.GetComponent<IsAttacking>();
+        handlePlayerLife = playerMovement.GetComponent<HandlePlayerLife>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         isFacing();
-
-       
-            
-               
-            
-         
-           
-        
     }
+
     void Update()
     {
-        if (isAttacking.isAttackingFunct())
+        if (isAttacking != null && isAttacking.IsAttackingNow())
         {
-          Debug.Log("aada");
-        isTouching();  
-        }
-            
-        
-    }
-    
-    
-    private void isTouching()
-    {
-
-        //logique pour savoir si lors de l'attaque le joueur touche l'ennemie
-
-        if (playerIsAttackingTowardTheLeft)
-
-        {
-
-            if (playerMovement.getXPosition() - rb.position.x < 3 && !(playerMovement.getXPosition() - rb.position.x < 0))
+            if (!hasHitThisAttack) // ✅ pas encore frappé pendant cette attaque
             {
-
-                numberOfBeinghit += 1;
-                Debug.Log(numberOfBeinghit);
-                
+                if (isTouching())
+                {
+                    EnemyHit();
+                    hasHitThisAttack = true; // ✅ marquer comme frappé
+                }
             }
         }
         else
         {
-
-            if (playerMovement.getXPosition() - rb.position.x < 0 && !(playerMovement.getXPosition() - rb.position.x < -3))
-            {
-                numberOfBeinghit += 1;
-                Debug.Log(numberOfBeinghit);
-                
-
-            }
+            // ✅ reset quand l’attaque est finie
+            hasHitThisAttack = false;
         }
+    }
 
-        if (numberOfBeinghit == Pvnumber)
+    private bool isTouching()
+    {
+        float distance = playerMovement.getXPosition() - rb.position.x;
+
+        if (playerIsAttackingTowardTheLeft)
         {
-            // si l'ennemi est touchner plusieurs fois il meurt
+            return distance < 3 && distance > 0;
+        }
+        else
+        {
+            return distance < 0 && distance > -3;
+        }
+    }
 
-            playerMovement.winALife();
-            playerMovement.animator.SetBool("Attack", false);
+    private void EnemyHit()
+    {
+        numberOfBeinghit += 1;
+        Debug.Log($"Enemy hit {numberOfBeinghit} / {Pvnumber}");
+
+        if (numberOfBeinghit >= Pvnumber)
+        {
+            handlePlayerLife.winALife();
             Destroy(gameObject);
         }
     }
-    // regarde de quel cote le joueur regarde
+
     private void isFacing()
     {
-        if (playerMovement.spriteRenderer.flipX == true)
-        {
-            playerIsAttackingTowardTheLeft = true;
-
-
-        }
-        else
-        {
-            playerIsAttackingTowardTheLeft = false;
-        }
+        playerIsAttackingTowardTheLeft = playerMovement.spriteRenderer.flipX;
     }
 }

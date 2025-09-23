@@ -22,6 +22,7 @@ public class EnemyDamageOnContact : MonoBehaviour
 {
 
     [SerializeField] PlayerMovement playerMovement;
+    private HandlePlayerLife handlePlayerLife;
     /// <summary>
     /// Tag attendu sur la racine du joueur (celle qui porte le Rigidbody2D et PlayerHealth).
     /// </summary>
@@ -41,7 +42,10 @@ public class EnemyDamageOnContact : MonoBehaviour
     // Mémorise le dernier moment où un coup a été porté (par ennemi).
     // Pour un cooldown par CIBLE, utiliser un Dictionary< PlayerHealth, float > (voir NOTE).
     float lastHitTime = -999f;
-
+     void Start()
+    {
+        handlePlayerLife = playerMovement.GetComponent<HandlePlayerLife>();
+    }
     void Reset()
     {
         // Comme il s'agit d'une hitbox, on force le collider en "trigger"
@@ -58,7 +62,7 @@ public class EnemyDamageOnContact : MonoBehaviour
         // Filtre : on ne réagit qu'au Player (par Tag)
         if (!root.CompareTag(playerTag)) return;
 
-        playerMovement.loseALifeVersionRenderer();
+        handlePlayerLife.loseALifeVersionRenderer();
        
          // pas de santé trouvée → rien à faire
 
