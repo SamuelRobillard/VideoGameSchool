@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 2840f859b3626f74a9c1568743f04145
+guid: 39bb736ae197df24bbbaf29b6ad3fbca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5379369032315083775
-    second: theknightslashpixel_0
-  - first:
-      213: 7039693621689429935
-    second: theknightslashpixel_1
-  - first:
-      213: 6562123672581602615
-    second: theknightslashpixel_2
-  - first:
-      213: 3414748653088302003
-    second: theknightslashpixel_3
-  - first:
-      213: -9145555670279510023
-    second: theknightslashpixel_4
+      213: 4287297271136092652
+    second: burning_start_5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -63,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -112,101 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: theknightslashpixel_0
+      name: burning_start_5_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 2
-        width: 14
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ffb90ee32ab57aa40800000000000000
-      internalID: 5379369032315083775
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: theknightslashpixel_1
-      rect:
-        serializedVersion: 2
-        x: 47
-        y: 2
-        width: 15
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fafa1601d0402b160800000000000000
-      internalID: 7039693621689429935
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: theknightslashpixel_2
-      rect:
-        serializedVersion: 2
-        x: 81
-        y: 2
-        width: 22
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 73d786c66b8511b50800000000000000
-      internalID: 6562123672581602615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: theknightslashpixel_3
-      rect:
-        serializedVersion: 2
-        x: 127
-        y: 3
-        width: 14
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3b36290decf936f20800000000000000
-      internalID: 3414748653088302003
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: theknightslashpixel_4
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 6
+        x: 0
+        y: 0
         width: 16
-        height: 10
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9f72e67b295741180800000000000000
-      internalID: -9145555670279510023
+      spriteID: ce1819c272a8f7b30800000000000000
+      internalID: 4287297271136092652
       vertices: []
       indices: 
       edges: []
@@ -235,11 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      theknightslashpixel_0: 5379369032315083775
-      theknightslashpixel_1: 7039693621689429935
-      theknightslashpixel_2: 6562123672581602615
-      theknightslashpixel_3: 3414748653088302003
-      theknightslashpixel_4: -9145555670279510023
+      burning_start_5_0: 4287297271136092652
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

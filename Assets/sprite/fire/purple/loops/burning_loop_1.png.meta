@@ -1,22 +1,34 @@
 fileFormatVersion: 2
-guid: 2840f859b3626f74a9c1568743f04145
+guid: cc664bd1c9ec6a5458ac9250e886f031
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5379369032315083775
-    second: theknightslashpixel_0
+      213: -6451659011051416826
+    second: burning_loop_1_0
   - first:
-      213: 7039693621689429935
-    second: theknightslashpixel_1
+      213: 5763944664088261270
+    second: burning_loop_1_1
   - first:
-      213: 6562123672581602615
-    second: theknightslashpixel_2
+      213: -241156948233288094
+    second: burning_loop_1_2
   - first:
-      213: 3414748653088302003
-    second: theknightslashpixel_3
+      213: 1379929217135556736
+    second: burning_loop_1_3
   - first:
-      213: -9145555670279510023
-    second: theknightslashpixel_4
+      213: 1018185316041469859
+    second: burning_loop_1_4
+  - first:
+      213: 4533643106053293943
+    second: burning_loop_1_5
+  - first:
+      213: 2358241775649404834
+    second: burning_loop_1_6
+  - first:
+      213: 3670861799719939002
+    second: burning_loop_1_7
+  - first:
+      213: 5720627644259429545
+    second: burning_loop_1_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +61,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -112,13 +124,35 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: theknightslashpixel_0
+      name: burning_loop_1_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6031552df4a1776a0800000000000000
+      internalID: -6451659011051416826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: burning_loop_1_1
       rect:
         serializedVersion: 2
         x: 8
-        y: 2
-        width: 14
-        height: 27
+        y: 15
+        width: 8
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,20 +161,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ffb90ee32ab57aa40800000000000000
-      internalID: 5379369032315083775
+      spriteID: 6923dff1225adff40800000000000000
+      internalID: 5763944664088261270
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: theknightslashpixel_1
+      name: burning_loop_1_2
       rect:
         serializedVersion: 2
-        x: 47
-        y: 2
+        x: 29
+        y: 0
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2660075880d37acf0800000000000000
+      internalID: -241156948233288094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: burning_loop_1_3
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 0
         width: 15
-        height: 27
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,64 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fafa1601d0402b160800000000000000
-      internalID: 7039693621689429935
+      spriteID: 0883c82df4e762310800000000000000
+      internalID: 1379929217135556736
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: theknightslashpixel_2
+      name: burning_loop_1_4
       rect:
         serializedVersion: 2
-        x: 81
-        y: 2
-        width: 22
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 73d786c66b8511b50800000000000000
-      internalID: 6562123672581602615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: theknightslashpixel_3
-      rect:
-        serializedVersion: 2
-        x: 127
-        y: 3
-        width: 14
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3b36290decf936f20800000000000000
-      internalID: 3414748653088302003
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: theknightslashpixel_4
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 6
+        x: 76
+        y: 0
         width: 16
-        height: 10
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +227,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9f72e67b295741180800000000000000
-      internalID: -9145555670279510023
+      spriteID: 3afab2e7622512e00800000000000000
+      internalID: 1018185316041469859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: burning_loop_1_5
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 0
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77784ba726cbaee30800000000000000
+      internalID: 4533643106053293943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: burning_loop_1_6
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a7b11486682ab020800000000000000
+      internalID: 2358241775649404834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: burning_loop_1_7
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 0
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abbabd79b5581f230800000000000000
+      internalID: 3670861799719939002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: burning_loop_1_8
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 0
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9acec548880c36f40800000000000000
+      internalID: 5720627644259429545
       vertices: []
       indices: 
       edges: []
@@ -235,11 +335,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      theknightslashpixel_0: 5379369032315083775
-      theknightslashpixel_1: 7039693621689429935
-      theknightslashpixel_2: 6562123672581602615
-      theknightslashpixel_3: 3414748653088302003
-      theknightslashpixel_4: -9145555670279510023
+      burning_loop_1_0: -6451659011051416826
+      burning_loop_1_1: 5763944664088261270
+      burning_loop_1_2: -241156948233288094
+      burning_loop_1_3: 1379929217135556736
+      burning_loop_1_4: 1018185316041469859
+      burning_loop_1_5: 4533643106053293943
+      burning_loop_1_6: 2358241775649404834
+      burning_loop_1_7: 3670861799719939002
+      burning_loop_1_8: 5720627644259429545
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

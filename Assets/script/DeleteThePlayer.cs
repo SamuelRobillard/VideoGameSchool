@@ -52,22 +52,18 @@ public class DeleteThePlayer : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // On active le fade
-            for (int i = 0; i < 10; i++)
-            {
-
-                sr.color = Color.black;
-                await Task.Delay(100);
-                sr.color = Color.red;
-                await Task.Delay(100);
-                sr.color = Color.blue;
-                await Task.Delay(100);
-                sr.color = Color.green;
-                await Task.Delay(100);
-                if (i == 4)
-                {
-                    fading = true;
-                }
-            }
+            GameObject fire1 = GameObject.Find("burning_start_1_0 (1)");
+            GameObject fire2 = GameObject.Find("burning_start_1_0 (2)");
+            GameObject fire3 = GameObject.Find("burning_start_1_0 (3)");
+            GameObject fire4 = GameObject.Find("burning_start_1_0 (4)");
+            fire1.GetComponent<SpriteRenderer>().enabled = true;
+            fire2.GetComponent<SpriteRenderer>().enabled = true;
+            fire3.GetComponent<SpriteRenderer>().enabled = true;
+            fire4.GetComponent<SpriteRenderer>().enabled = true;
+            await Task.Delay(2000);
+            fading = true;
+                
+        
            
             
            

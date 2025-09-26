@@ -23,7 +23,9 @@ public class Potion : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             handlePlayerLife.winALife();
-            Object.Destroy(GameObject.Find("potion"));
+            GameObject potion = GameObject.Find("potion");
+            potion.GetComponent<SpriteRenderer>().enabled = false;
+            potion.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }

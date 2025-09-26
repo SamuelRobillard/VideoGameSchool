@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -6,6 +7,7 @@ using UnityEngine;
 public class SimpleEnemyPatrol : MonoBehaviour
 {
     [SerializeField] PlayerMovement playerMovement;
+    
     public Transform leftPoint, rightPoint;
 
     public float speed = 2f;
@@ -14,11 +16,14 @@ public class SimpleEnemyPatrol : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator animator;
+    private float lastHitTime = -9999f;
+    private float cooldown = 1f;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         //  animator = GetComponent<Animator>();
     }
 
@@ -26,15 +31,24 @@ public class SimpleEnemyPatrol : MonoBehaviour
     {
         if (playerMovement.getXPosition() > 20 && playerMovement.getXPosition() < 29)
         {
+            if (Time.time > lastHitTime + cooldown)
+                {
+                Debug.Log("trigger");
+                    animator.SetTrigger("isAttacking");
+                    lastHitTime = Time.time;
+                }
             if (playerMovement.getXPosition() < transform.position.x)
             {
                 toRight = false;
-                
+
+
             }
             else
             {
                 toRight = true;
-                
+
+
+
             }
         }
         else
@@ -48,7 +62,7 @@ public class SimpleEnemyPatrol : MonoBehaviour
         }
         float dir = toRight ? 1f : -1f;
         rb.linearVelocity = new Vector2(dir * speed, rb.linearVelocity.y);
-        sr.flipX = toRight;
+        sr.flipX = !toRight;
         }
        
 

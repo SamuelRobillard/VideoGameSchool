@@ -61,17 +61,26 @@ public class PlayerHitEnemy : MonoBehaviour
     private void EnemyHit()
     {
         numberOfBeinghit += 1;
-        
+
 
         if (numberOfBeinghit >= Pvnumber)
         {
             handlePlayerLife.winALife();
-            Destroy(gameObject);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            GameObject enemyChild = GameObject.Find("colliderCircle");
+
+            enemyChild.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
     private void isFacing()
     {
         playerIsAttackingTowardTheLeft = playerMovement.spriteRenderer.flipX;
+    }
+    public bool setNumberOfBeingHit(int number)
+    {
+        numberOfBeinghit = number;
+        return true; 
     }
 }

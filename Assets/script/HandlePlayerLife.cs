@@ -11,16 +11,47 @@ public class HandlePlayerLife : MonoBehaviour
     private bool lostAllLife = false;
     private bool gameIsEnd = false;
 
+    private bool hasPasscheckpoint1 = false;
+    private bool hasPasscheckpoint2 = false;
+    [SerializeField] GameObject checkpointDefault;
+    [SerializeField] GameObject checkpoint1;
+    [SerializeField] GameObject checkpoint2;
+    [SerializeField] GameObject lifes1;
+    [SerializeField] GameObject lifes2;
+    [SerializeField] GameObject lifes3;
+    [SerializeField] ResetTheGame resetTheGame;
+
     // Start is called before the first frame update
+    void Awake()
+    {
+     
+       
+    }
     void Start()
     {
-
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (!hasPasscheckpoint1)
+        {
+            Debug.Log("joueur : " + playerMovement.getXPosition() + " checkout point :" + checkpoint1.transform.position.x);
+            if (playerMovement.getXPosition() > checkpoint1.transform.position.x)
+            {
+               
+                hasPasscheckpoint1 = true;
+            }
+        }
+         else if(!hasPasscheckpoint2)
+        {
+          if (playerMovement.getXPosition() > checkpoint2.transform.position.x)
+            {
+                hasPasscheckpoint2 = true;
+            }  
+        }
+        
     }
 
     public void winALife()
@@ -28,8 +59,16 @@ public class HandlePlayerLife : MonoBehaviour
         if (viesRestante < 3 && !lostAllLife)
         {
             viesRestante += 1;
-            GameObject lifes = GameObject.Find("lifes" + " " + "(" + viesRestante + ")");
-            lifes.GetComponent<SpriteRenderer>().enabled = true;
+            if (viesRestante == 3) {
+                     lifes1.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                else if (viesRestante == 2) {
+                     lifes2.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                else if  (viesRestante == 1) {
+                     lifes3.GetComponent<SpriteRenderer>().enabled = true;
+                }
+            
         }
 
 
@@ -42,8 +81,17 @@ public class HandlePlayerLife : MonoBehaviour
         playerMovement.animator.SetBool("isHit", true);
             try
             {
-                GameObject lifes = GameObject.Find("lifes" + " " + "(" + viesRestante + ")");
-                lifes.GetComponent<SpriteRenderer>().enabled = false;
+                if (viesRestante == 3) {
+                     lifes1.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else if (viesRestante == 2) {
+                     lifes2.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else if  (viesRestante == 1) {
+                     lifes3.GetComponent<SpriteRenderer>().enabled = false;
+                }
+            
+                
                 viesRestante -= 1;
                 Color color;
                 if (ColorUtility.TryParseHtmlString("#EC8585", out color))
@@ -70,6 +118,8 @@ public class HandlePlayerLife : MonoBehaviour
             {
                 lostAllLife = true;
                 playerMovement.animator.SetTrigger("isDead");
+                Rigidbody2D rb = playerMovement.GetComponent<Rigidbody2D>();
+                rb.GetComponent<PlayerMovement>().enabled = false;
                 await Task.Delay(2000);
                 if (!gameIsEnd)
                 {
@@ -83,12 +133,26 @@ public class HandlePlayerLife : MonoBehaviour
     }
     private void endingGame()
     {
-        
-        winALife();
-        winALife();
-        winALife();
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
 
+
+        if (hasPasscheckpoint2)
+        {
+            playerMovement.transform.position = new Vector2(checkpoint2.transform.position.x, checkpoint2.transform.position.y);
+        }
+        else if (hasPasscheckpoint1)
+        {
+            playerMovement.transform.position = new Vector2(checkpoint1.transform.position.x, checkpoint1.transform.position.y);
+        }
+        else
+        {
+            playerMovement.transform.position = new Vector2(checkpointDefault.transform.position.x, checkpointDefault.transform.position.y);
+        }
+        // reset les variables lorsque le joueur meurt
+        viesRestante = 3;
+        lostAllLife = false;
+        gameIsEnd = false;
+        resetTheGame.Reset();
+        Rigidbody2D rb = playerMovement.GetComponent<Rigidbody2D>();
+        rb.GetComponent<PlayerMovement>().enabled = true;
     }
 }
