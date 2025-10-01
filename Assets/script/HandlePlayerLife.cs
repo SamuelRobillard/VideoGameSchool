@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using System;
 public class HandlePlayerLife : MonoBehaviour
 {
 
     [SerializeField] PlayerMovement playerMovement;
+    private int numberOfBeingDead = 0;
     private int viesRestante = 3;
     private bool lostAllLife = false;
     private bool gameIsEnd = false;
@@ -37,7 +39,7 @@ public class HandlePlayerLife : MonoBehaviour
     {
         if (!hasPasscheckpoint1)
         {
-            Debug.Log("joueur : " + playerMovement.getXPosition() + " checkout point :" + checkpoint1.transform.position.x);
+            
             if (playerMovement.getXPosition() > checkpoint1.transform.position.x)
             {
                
@@ -133,7 +135,16 @@ public class HandlePlayerLife : MonoBehaviour
     }
     private void endingGame()
     {
-
+        Debug.Log(numberOfBeingDead);
+        if (numberOfBeingDead > 0)
+        {
+            SceneManager.LoadScene("defeat");
+        }
+        else
+        {
+            numberOfBeingDead = 1;
+        }
+        
 
         if (hasPasscheckpoint2)
         {

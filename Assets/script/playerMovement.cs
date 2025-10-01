@@ -94,7 +94,6 @@ public class PlayerMovement : MonoBehaviour
         if (rb.position.y < minimumY)
         {
             transform.position = new Vector2(4f, -1.8f);
-
             handlePlayerLife.loseALifeVersionRenderer();
         }
     }
