@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerHitEnemy : MonoBehaviour
@@ -33,13 +35,13 @@ public class PlayerHitEnemy : MonoBehaviour
                 if (isTouching())
                 {
                     EnemyHit();
-                    hasHitThisAttack = true; // ✅ marquer comme frappé
+                    hasHitThisAttack = true; // marquer comme frappé
                 }
             }
         }
         else
         {
-            // ✅ reset quand l’attaque est finie
+            //  reset quand l’attaque est finie
             hasHitThisAttack = false;
         }
     }
@@ -63,6 +65,7 @@ public class PlayerHitEnemy : MonoBehaviour
         numberOfBeinghit += 1;
 
 
+
         if (numberOfBeinghit >= Pvnumber)
         {
             handlePlayerLife.winALife();
@@ -72,8 +75,22 @@ public class PlayerHitEnemy : MonoBehaviour
 
             enemyChild.GetComponent<BoxCollider2D>().enabled = false;
         }
+        else
+        {
+            StartCoroutine(FlashRed());
+         
+        }
     }
-
+    private IEnumerator FlashRed()
+{
+    Color redColor;
+    if (ColorUtility.TryParseHtmlString("#EC8585", out redColor))
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = redColor;
+        yield return new WaitForSeconds(0.5f); // wait 0.5 second
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+}
     private void isFacing()
     {
         playerIsAttackingTowardTheLeft = playerMovement.spriteRenderer.flipX;

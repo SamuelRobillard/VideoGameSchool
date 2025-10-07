@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -37,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private HandlePlayerLife handlePlayerLife;
 
 
-
+    public bool hasFallentYet = false;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         hasFallTooLow(LowestGround);
+
         if (!isPiked)
         {
             GetInputs();
@@ -93,8 +95,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (rb.position.y < minimumY)
         {
-            transform.position = new Vector2(4f, -1.8f);
-            handlePlayerLife.loseALifeVersionRenderer();
+            SceneManager.LoadScene("defeat");
+            
         }
     }
     //teleporte le joueur a une position donne

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 public class HandlePlayerLife : MonoBehaviour
 {
 
@@ -62,13 +64,13 @@ public class HandlePlayerLife : MonoBehaviour
         {
             viesRestante += 1;
             if (viesRestante == 3) {
-                     lifes1.GetComponent<SpriteRenderer>().enabled = true;
+                lifes1.GetComponent<UnityEngine.UI.Image>().enabled = true;
                 }
                 else if (viesRestante == 2) {
-                     lifes2.GetComponent<SpriteRenderer>().enabled = true;
+                lifes2.GetComponent<UnityEngine.UI.Image>().enabled = true;
                 }
                 else if  (viesRestante == 1) {
-                     lifes3.GetComponent<SpriteRenderer>().enabled = true;
+                lifes3.GetComponent<UnityEngine.UI.Image>().enabled = true;
                 }
             
         }
@@ -84,13 +86,13 @@ public class HandlePlayerLife : MonoBehaviour
             try
             {
                 if (viesRestante == 3) {
-                     lifes1.GetComponent<SpriteRenderer>().enabled = false;
+                    lifes1.GetComponent<UnityEngine.UI.Image>().enabled = false;
                 }
                 else if (viesRestante == 2) {
-                     lifes2.GetComponent<SpriteRenderer>().enabled = false;
+                     lifes2.GetComponent<UnityEngine.UI.Image>().enabled = false;
                 }
                 else if  (viesRestante == 1) {
-                     lifes3.GetComponent<SpriteRenderer>().enabled = false;
+                     lifes3.GetComponent<UnityEngine.UI.Image>().enabled = false;
                 }
             
                 
@@ -133,8 +135,9 @@ public class HandlePlayerLife : MonoBehaviour
         }
      
     }
-    private void endingGame()
+    public void endingGame()
     {
+        
         Debug.Log(numberOfBeingDead);
         if (numberOfBeingDead > 0)
         {
@@ -144,7 +147,7 @@ public class HandlePlayerLife : MonoBehaviour
         {
             numberOfBeingDead = 1;
         }
-        
+
 
         if (hasPasscheckpoint2)
         {
@@ -165,5 +168,6 @@ public class HandlePlayerLife : MonoBehaviour
         resetTheGame.Reset();
         Rigidbody2D rb = playerMovement.GetComponent<Rigidbody2D>();
         rb.GetComponent<PlayerMovement>().enabled = true;
+        
     }
 }
