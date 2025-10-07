@@ -9,11 +9,11 @@ public class QuitTheGame : MonoBehaviour
 {
     [SerializeField] Button buttonQuit;
     [SerializeField] Button buttonMenu;
-    
-    [SerializeField] string sceneToLoad;
+
+
     private GameObject canvas;
     private bool isOpen = false;
-    private  float cooldown = 0.2f;
+    private float cooldown = 0.2f;
     private float lastOpened = -9999f;
     void Start()
     {
@@ -22,20 +22,23 @@ public class QuitTheGame : MonoBehaviour
         buttonMenu.onClick.AddListener(TaskLoadSceneStart);
 
         canvas = GameObject.Find("canvaMenu");
-        if (sceneToLoad == "Start")
-        {
-            canvas.SetActive(false);
-        }
-        else
+        if (SceneManager.GetActiveScene().name == "Start" || SceneManager.GetActiveScene().name == "defeat" || SceneManager.GetActiveScene().name == "Victory")
         {
             canvas.SetActive(true);
         }
-       
+        else
+        {
+            canvas.SetActive(false);
+        }
+
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape) && Time.time > lastOpened + cooldown && sceneToLoad =="Start")
+
+        if (Input.GetKey(KeyCode.Escape) && Time.time > lastOpened + cooldown && (SceneManager.GetActiveScene().name != "Start" &&
+        SceneManager.GetActiveScene().name != "defeat" && SceneManager.GetActiveScene().name != "Victory"
+        ))
         {
             lastOpened = Time.time;
             if (isOpen)
@@ -63,11 +66,42 @@ public class QuitTheGame : MonoBehaviour
     }
     private void TaskLoadSceneStart()
     {
-        Debug.Log("scene start");
-        SceneManager.LoadScene(sceneToLoad);
+        try
+        {
+            // stock le nom de la derniere scene pour pouvoir reload la bonne
+            // ne prend pas en compte les scene Start, defeat et Victory
+            if (SceneManager.GetActiveScene().name != "Start" && SceneManager.GetActiveScene().name != "defeat" && SceneManager.GetActiveScene().name != "Victory")
+                handleScene.lastScene = SceneManager.GetActiveScene().name;
+
+        }
+        catch
+        {
+            Debug.Log("no scene");
+        }
+        if (SceneManager.GetActiveScene().name != "Start" && SceneManager.GetActiveScene().name != "defeat" && SceneManager.GetActiveScene().name != "Victory")
+        {
+            SceneManager.LoadScene("Start");
+        }
+        else
+        {
+            if (handleScene.lastScene != null && handleScene.lastScene != "Start")
+            {
+                SceneManager.LoadScene(handleScene.lastScene);
+            }
+            else
+            {
+                SceneManager.LoadScene("scene1");
+            }
+        }
     }
     public void CloseMenu()
     {
+        canvas = GameObject.Find("canvaMenu");
         canvas.SetActive(false);
+    }
+    public void LoadNextScene()
+    {
+        
+        SceneManager.LoadScene("Scene2"); 
     }
 }

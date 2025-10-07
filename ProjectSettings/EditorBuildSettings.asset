@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/defeat.unity
     guid: f117aa60685f4b141a8e8d9509c42eca
+  - enabled: 1
+    path: Assets/Scenes/Victory.unity
+    guid: 343212b3dbf928e4bafc37e1cbb38782
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

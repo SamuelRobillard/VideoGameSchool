@@ -39,23 +39,24 @@ public class HandlePlayerLife : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!hasPasscheckpoint1)
         {
-            
+
             if (playerMovement.getXPosition() > checkpoint1.transform.position.x)
             {
-               
+
                 hasPasscheckpoint1 = true;
             }
         }
-         else if(!hasPasscheckpoint2)
+        else if (!hasPasscheckpoint2)
         {
-          if (playerMovement.getXPosition() > checkpoint2.transform.position.x)
+            if (playerMovement.getXPosition() > checkpoint2.transform.position.x)
             {
                 hasPasscheckpoint2 = true;
-            }  
+            }
         }
-        
+
     }
 
     public void winALife()
@@ -141,6 +142,7 @@ public class HandlePlayerLife : MonoBehaviour
         Debug.Log(numberOfBeingDead);
         if (numberOfBeingDead > 0)
         {
+            handleScene.lastScene = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene("defeat");
         }
         else
