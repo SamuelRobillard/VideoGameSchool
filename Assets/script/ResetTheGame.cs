@@ -21,6 +21,7 @@ public class ResetTheGame : MonoBehaviour
     {
         try
         {
+            // redonne toutes les vies au joueurs
             GameObject lifes1 = GameObject.Find("lifes (1)");
             GameObject lifes2 = GameObject.Find("lifes (2)");
             GameObject lifes3 = GameObject.Find("lifes (3)");
@@ -34,7 +35,8 @@ public class ResetTheGame : MonoBehaviour
             Debug.Log("not found");
         }
 
-
+        // rends tous les objets et ennemies visibles
+        // réinitialise aussi des variables importantes
         GameObject potion = GameObject.Find("potion");
         potion.GetComponent<SpriteRenderer>().enabled = true;
         potion.GetComponent<BoxCollider2D>().enabled = true;

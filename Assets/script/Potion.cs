@@ -22,6 +22,7 @@ public class Potion : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
+            // si l'objet qui rentre en contact est un Player, lui redonne une vie et désactive le visuel de la potion
             handlePlayerLife.winALife();
             GameObject potion = GameObject.Find("potion");
             potion.GetComponent<SpriteRenderer>().enabled = false;

@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1239,7 +1239,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonQuit: {fileID: 155607003}
   buttonMenu: {fileID: 1334778787}
-  sceneToLoad: scene1
 --- !u!4 &2033459754
 Transform:
   m_ObjectHideFlags: 0

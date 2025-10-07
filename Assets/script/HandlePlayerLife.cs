@@ -40,6 +40,7 @@ public class HandlePlayerLife : MonoBehaviour
     void Update()
     {
 
+        // regarde si le joueur dépace un checkpoint
         if (!hasPasscheckpoint1)
         {
 
@@ -61,19 +62,23 @@ public class HandlePlayerLife : MonoBehaviour
 
     public void winALife()
     {
+        // redonne une vie au joueur en activant l'image de la vie correspondente
         if (viesRestante < 3 && !lostAllLife)
         {
             viesRestante += 1;
-            if (viesRestante == 3) {
+            if (viesRestante == 3)
+            {
                 lifes1.GetComponent<UnityEngine.UI.Image>().enabled = true;
-                }
-                else if (viesRestante == 2) {
+            }
+            else if (viesRestante == 2)
+            {
                 lifes2.GetComponent<UnityEngine.UI.Image>().enabled = true;
-                }
-                else if  (viesRestante == 1) {
+            }
+            else if (viesRestante == 1)
+            {
                 lifes3.GetComponent<UnityEngine.UI.Image>().enabled = true;
-                }
-            
+            }
+
         }
 
 
@@ -81,24 +86,32 @@ public class HandlePlayerLife : MonoBehaviour
 
     public async void loseALifeVersionRenderer()
     {
+        // enleve une vie au joueur en désactivant l'image de la vie correspondente
         if (!lostAllLife && !gameIsEnd)
         {
-        playerMovement.animator.SetBool("isHit", true);
+
+            playerMovement.animator.SetBool("isHit", true);
             try
+
             {
-                if (viesRestante == 3) {
+                // selectionne la bonne image
+                if (viesRestante == 3)
+                {
                     lifes1.GetComponent<UnityEngine.UI.Image>().enabled = false;
                 }
-                else if (viesRestante == 2) {
-                     lifes2.GetComponent<UnityEngine.UI.Image>().enabled = false;
+                else if (viesRestante == 2)
+                {
+                    lifes2.GetComponent<UnityEngine.UI.Image>().enabled = false;
                 }
-                else if  (viesRestante == 1) {
-                     lifes3.GetComponent<UnityEngine.UI.Image>().enabled = false;
+                else if (viesRestante == 1)
+                {
+                    lifes3.GetComponent<UnityEngine.UI.Image>().enabled = false;
                 }
-            
-                
+
+
                 viesRestante -= 1;
                 Color color;
+                // change la couleur du sprite
                 if (ColorUtility.TryParseHtmlString("#EC8585", out color))
                 {
                     playerMovement.spriteRenderer.color = color;
@@ -109,18 +122,20 @@ public class HandlePlayerLife : MonoBehaviour
             }
             catch
             {
-                
+
                 if (!gameIsEnd)
                 {
-                gameIsEnd = true;
-                await Task.Delay(2000);
-                endingGame();
+                    gameIsEnd = true;
+                    await Task.Delay(2000);
+                    endingGame();
                 }
-                
+
                 return;
-        }
-        if (viesRestante == 0)
+            }
+            if (viesRestante == 0)
             {
+                // si le joueur perd toute ces vies, on déclache une animation de mort
+                // puit on attend un peu et on lance la methode qui va arreter la partie.
                 lostAllLife = true;
                 playerMovement.animator.SetTrigger("isDead");
                 Rigidbody2D rb = playerMovement.GetComponent<Rigidbody2D>();
@@ -140,6 +155,7 @@ public class HandlePlayerLife : MonoBehaviour
     {
         
         Debug.Log(numberOfBeingDead);
+        // si le joueur est deja mort plus d'une foix, la scene de défaite se lance
         if (numberOfBeingDead > 0)
         {
             handleScene.lastScene = SceneManager.GetActiveScene().name;
@@ -150,7 +166,7 @@ public class HandlePlayerLife : MonoBehaviour
             numberOfBeingDead = 1;
         }
 
-
+        // fait réapparaitre le joueur au bon endroit.
         if (hasPasscheckpoint2)
         {
             playerMovement.transform.position = new Vector2(checkpoint2.transform.position.x, checkpoint2.transform.position.y);

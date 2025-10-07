@@ -55,16 +55,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // verifie si le joueur est dans une maison
         if (isInside)
         {
             quitInsideHouse(5f, 12f, 4f, -1.8f);
         }
-
+        // vérifie si le joueur est tombé en dehors des limites
         hasFallTooLow(LowestGround);
 
         if (!isPiked)
         {
+        // si le joueur n'est pas en train de subir un degat de pique, il peut bouger
             GetInputs();
             Move();
         }
@@ -73,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         //logique pour la gestion du saut
-        
+        // vérifie que le joeur est sur un sol et que son nombre max de saut n'est pas dépacer
         if ((Input.GetButtonDown("Jump") && isgrounded) || (Input.GetButtonDown("Jump") && currentJump < jumMax))
         {
             
@@ -93,10 +94,12 @@ public class PlayerMovement : MonoBehaviour
    
     private void hasFallTooLow(int minimumY)
     {
+        // si le joueur tombe trop bas. lance la scenbe de defaite et stock la scene actuelle
         if (rb.position.y < minimumY)
         {
+            handleScene.lastScene = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene("defeat");
-            
+
         }
     }
     //teleporte le joueur a une position donne
@@ -124,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GetInputs()
     {
-        //voie de quel cote le player bouge et tourne le spirte
+        //voie de quel cote le player bouge et tourne le sprite
         xAxis = Input.GetAxisRaw("Horizontal");
         if (xAxis != 0)
         {
@@ -148,14 +151,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Move()
     {
-
+        // fait bouger le joueur dans le sens qu'il va
         rb.linearVelocity = new Vector2(walkspeed * xAxis, rb.linearVelocity.y);
         if (xAxis != 0 && isgrounded && !audioSource.isPlaying)
         {
             audioSource.PlayOneShot(sfxWalk);
         }
         yaxis = Input.GetAxisRaw("Vertical");
-        
+        // si le joueur ne marche plus et qu'il n'est pas en train de sauter, on désactive le son 
         if (xAxis == 0 && !(rb.linearVelocity.y > 0))
         {
             
@@ -175,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     // si le joueur touche le seul il peut re sauter
     {
+        // permet de réinitialiser le saut lorsque le joueur est sur un sol
         if (collision.gameObject.tag.Equals("floor"))
         {
 
@@ -187,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         {
-            
+            // lors de la colision avec un pique, le joueur perd une vie et il est projeter vers l'arriere(la gauche)
             handlePlayerLife.loseALifeVersionRenderer();
             isPiked = true;
             rb.linearVelocity = new Vector2(walkspeed * -1, rb.linearVelocity.y + 6);
@@ -210,6 +214,5 @@ public class PlayerMovement : MonoBehaviour
 
     }
     
-    // redone les vies au joeueur et restart la scene
     
 }

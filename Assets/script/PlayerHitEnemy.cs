@@ -28,14 +28,16 @@ public class PlayerHitEnemy : MonoBehaviour
 
     void Update()
     {
+        // appelle une methode qui vérifie si le joueur attaque en ce moment
         if (isAttacking != null && isAttacking.IsAttackingNow())
         {
-            if (!hasHitThisAttack) // ✅ pas encore frappé pendant cette attaque
+            // verifie que l'ennemie n'a pas été toucher durant la meme attaque(évite de perde 2 vies en une seule attaque)
+            if (!hasHitThisAttack)
             {
                 if (isTouching())
                 {
                     EnemyHit();
-                    hasHitThisAttack = true; // marquer comme frappé
+                    hasHitThisAttack = true; 
                 }
             }
         }
@@ -48,8 +50,9 @@ public class PlayerHitEnemy : MonoBehaviour
 
     private bool isTouching()
     {
+        // prend la distance entre le joueur et l'ennemie 
         float distance = playerMovement.getXPosition() - rb.position.x;
-
+        // verifie si le joueur touche l'ennmie(depend de quelle dans direction le joueur frappe)
         if (playerIsAttackingTowardTheLeft)
         {
             return distance < 3 && distance > 0;
@@ -65,9 +68,10 @@ public class PlayerHitEnemy : MonoBehaviour
         numberOfBeinghit += 1;
 
 
-
+        // quand l'ennemie perd toutes ses vies, on rend son prite invisible et on désactive le boxCollider de son enfant.
         if (numberOfBeinghit >= Pvnumber)
         {
+            
             handlePlayerLife.winALife();
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -93,6 +97,7 @@ public class PlayerHitEnemy : MonoBehaviour
 }
     private void isFacing()
     {
+        // retounre dans quelle direction le joueur regarde
         playerIsAttackingTowardTheLeft = playerMovement.spriteRenderer.flipX;
     }
     public bool setNumberOfBeingHit(int number)

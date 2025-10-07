@@ -6682,6 +6682,10 @@ PrefabInstance:
       propertyPath: checkpointDefault
       value: 
       objectReference: {fileID: 1691642013}
+    - target: {fileID: 4368702877757196552, guid: d20622fa17d075d488f1ca46e259faea, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5614429508848071351, guid: d20622fa17d075d488f1ca46e259faea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

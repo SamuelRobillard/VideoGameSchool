@@ -35,7 +35,8 @@ public class QuitTheGame : MonoBehaviour
 
     void Update()
     {
-
+        // verifie que la touche est entré, que le delait est respecter et que la scene est bonne
+        // ouvre ou ferme le menu 
         if (Input.GetKey(KeyCode.Escape) && Time.time > lastOpened + cooldown && (SceneManager.GetActiveScene().name != "Start" &&
         SceneManager.GetActiveScene().name != "defeat" && SceneManager.GetActiveScene().name != "Victory"
         ))
@@ -78,6 +79,7 @@ public class QuitTheGame : MonoBehaviour
         {
             Debug.Log("no scene");
         }
+        // verifie que la scene actuelle est une scene de jeu(scene1 ou scene2) et que la scene a loader n'est pas null
         if (SceneManager.GetActiveScene().name != "Start" && SceneManager.GetActiveScene().name != "defeat" && SceneManager.GetActiveScene().name != "Victory")
         {
             SceneManager.LoadScene("Start");

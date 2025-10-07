@@ -41,7 +41,7 @@ public class TextInteraction : MonoBehaviour
             {
                 allEnnemiesAreDead = true;
             }
-
+            // change le texte si tous les ennemies sont vaincus
             if (!allEnnemiesAreDead) {
                 text.text = "Kill all Ennemies";
             }
@@ -50,6 +50,7 @@ public class TextInteraction : MonoBehaviour
                 text.text = "Press Q";
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
+                    // fait rentrer le joueur dans une maison
                     playerMovement.setXYposition(10f, 19f);
                     playerMovement.isInside = true;
                 }
